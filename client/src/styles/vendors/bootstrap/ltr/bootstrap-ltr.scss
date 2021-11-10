@@ -1,0 +1,20 @@
+/* rtl:begin:options: {
+  "autoRename": true,
+  "stringMap":[ {
+    "name": "ltr-rtl",
+    "priority": 100,
+    "search": ["ltr"],
+    "replace": ["rtl"],
+    "options": {
+      "scope": "*",
+      "ignoreCase": false
+    }
+  } ]
+} */
+.ltr {
+  @import '../custom/variables';
+  @import "../../../../../node_modules/bootstrap/scss/bootstrap";
+  @import '../custom/bootswatch';
+}
+/*rtl:end:options*/
+
