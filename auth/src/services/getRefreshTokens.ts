@@ -1,4 +1,4 @@
-import { RefreshToken } from "@models/refresh-token";
+import { RefreshToken } from "../models/refresh-token";
 import getUser from "./getUser";
 
 async function getRefreshTokens ( userId: string ) {

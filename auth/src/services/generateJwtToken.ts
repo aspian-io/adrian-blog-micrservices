@@ -1,4 +1,4 @@
-import { UserDoc } from "@models/user";
+import { UserDoc } from "../models/user";
 import jwt from 'jsonwebtoken';
 
 function generateJwtToken ( user: UserDoc, claims: string[] ) {

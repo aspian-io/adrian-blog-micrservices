@@ -1,4 +1,4 @@
-import revokeToken from '@services/revokeToken';
+import revokeToken from '../services/revokeToken';
 import { NextFunction, Request, Response } from 'express';
 
 async function signout ( req: Request, res: Response, next: NextFunction ) {

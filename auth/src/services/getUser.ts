@@ -1,4 +1,4 @@
-import { User } from "@models/user";
+import { User } from "../models/user";
 import { isValidObjectId } from "mongoose";
 
 async function getUser ( id: string ) {

@@ -1,7 +1,7 @@
-import { BadRequestError } from "@errors/bad-request-error";
-import Password from "@helpers/password";
-import { Claim, ClaimDoc } from "@models/claim";
-import { User } from "@models/user";
+import { BadRequestError } from "@aspianet/common";
+import Password from "../helpers/password";
+import { Claim, ClaimDoc } from "../models/claim";
+import { User } from "../models/user";
 import basicDetails from "./basicDetails";
 import generateJwtToken from "./generateJwtToken";
 import generateRefreshToken from "./generateRefreshToken";

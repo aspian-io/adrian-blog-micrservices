@@ -1,4 +1,4 @@
-import { User } from "@models/user";
+import { User } from "../models/user";
 import basicDetails from "./basicDetails";
 
 async function getAllUsers () {

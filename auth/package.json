@@ -12,32 +12,13 @@
     "testEnvironment": "node",
     "setupFilesAfterEnv": [
       "./src/test/setup.ts"
-    ],
-    "moduleNameMapper": {
-      "@controllers/(.*)": "<rootDir>/src/controllers/$1",
-      "@routes/(.*)": "<rootDir>/src/routes/$1",
-      "@validation-schemas/(.*)": "<rootDir>/src/validation-schemas/$1",
-      "@helpers/(.*)": "<rootDir>/src/helpers/$1",
-      "@errors/(.*)": "<rootDir>/src/errors/$1",
-      "@middleware/(.*)": "<rootDir>/src/middleware/$1",
-      "@models/(.*)": "<rootDir>/src/models/$1",
-      "@services/(.*)": "<rootDir>/src/services/$1"
-    }
-  },
-  "_moduleAliases": {
-    "@controllers": "src/controllers",
-    "@routes": "src/routes",
-    "@validation-schemas": "src/validation-schemas",
-    "@helpers": "src/helpers",
-    "@errors": "src/errors",
-    "@middleware": "src/middleware",
-    "@models": "src/models",
-    "@services": "src/services"
+    ]
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aspianet/common": "^0.0.6",
     "@types/cookie-session": "^2.0.43",
     "@types/express": "^4.17.11",
     "@types/jsonwebtoken": "^8.5.5",
@@ -49,7 +30,6 @@
     "express-jwt": "^6.1.0",
     "express-validator": "^6.11.1",
     "jsonwebtoken": "^8.5.1",
-    "module-alias": "^2.2.2",
     "mongoose": "^5.13.7",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.3.5"

@@ -1,9 +1,8 @@
-import { BadRequestError } from '@errors/bad-request-error';
-import { User } from '@models/user';
+import { BadRequestError } from '@aspianet/common';
+import { User } from '../models/user';
 import { NextFunction, Request, Response } from 'express';
-import authenticate from '@services/authenticate';
-import setTokenCookie from '@helpers/cookie';
-import { Claim } from '@models/claim';
+import authenticate from '../services/authenticate';
+import setTokenCookie from '../helpers/cookie';
 
 async function signup ( req: Request, res: Response, next: NextFunction ) {
   const { firstName, lastName, email, password } = req.body;

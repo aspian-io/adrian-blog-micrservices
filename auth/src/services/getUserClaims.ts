@@ -1,5 +1,5 @@
-import { Claim, ClaimDoc } from "@models/claim";
-import { User } from "@models/user";
+import { Claim, ClaimDoc } from "../models/claim";
+import { User } from "../models/user";
 import getUser from "./getUser";
 
 async function getUserClaims ( userId: string ): Promise<string[]> {

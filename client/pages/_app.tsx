@@ -23,12 +23,14 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 MyApp.getInitialProps = async (appContext: AppContext) => {
   const appProps: AppInitialProps = await App.getInitialProps(appContext);
   try {
-    const { currentUser } = await authAgent.currentUser(
+    const axiosRes = await authAgent.refreshToken(
       appContext.ctx.req?.headers as Record<string, string>
     );
-    appProps.pageProps.currentUser = currentUser;
+    appContext.ctx.res?.setHeader('set-cookie', axiosRes.headers['set-cookie']);
+    appContext.ctx.res?.setHeader('authorization', axiosRes.data.jwtToken);
+    appProps.pageProps.currentUser = axiosRes.data;
   } catch (error) {
-    console.error('Something went wrong getting the current user - ', error);
+    console.error('Something went wrong getting the current user');
     appProps.pageProps.currentUser = null;
   }
   if (appContext.Component.getInitialProps) {

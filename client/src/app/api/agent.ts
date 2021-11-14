@@ -88,6 +88,7 @@ const requests = {
 
 export const authAgent = {
   currentUser: ( headers?: Record<string, string> ): Promise<{ currentUser: IUser | null }> => ( requests.get( '/users/current-user', headers ) ),
+  refreshToken: ( headers?: Record<string, string> ): Promise<AxiosResponse<IUser>> => ( axios.get( '/users/refresh-token', { headers } ) ),
   signin: ( user: IUserFormValues ): Promise<IUser> =>
     requests.post( '/users/signin', user ),
   signup: ( user: IUserFormValues ): Promise<IUser> =>

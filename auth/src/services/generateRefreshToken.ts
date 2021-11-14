@@ -1,5 +1,5 @@
-import { RefreshToken } from "@models/refresh-token";
-import { UserDoc } from "@models/user";
+import { RefreshToken } from "../models/refresh-token";
+import { UserDoc } from "../models/user";
 import randomTokenString from "./randomTokenString";
 
 function generateRefreshToken ( user: UserDoc, ipAddress: string ) {

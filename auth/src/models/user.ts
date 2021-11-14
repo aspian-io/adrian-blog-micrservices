@@ -1,4 +1,4 @@
-import Password from '@helpers/password';
+import Password from '../helpers/password';
 import mongoose, { PopulatedDoc } from 'mongoose';
 import { ClaimDoc } from './claim';
 

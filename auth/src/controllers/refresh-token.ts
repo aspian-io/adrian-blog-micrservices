@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import refreshTokenService from '@services/refreshToken';
-import setTokenCookie from '@helpers/cookie';
+import refreshTokenService from '../services/refreshToken';
+import setTokenCookie from '../helpers/cookie';
 
 async function refreshToken ( req: Request, res: Response, next: NextFunction ) {
   const token = req.cookies.refreshToken;

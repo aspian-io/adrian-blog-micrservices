@@ -1,4 +1,4 @@
-import { UserDoc } from "@models/user";
+import { UserDoc } from "../models/user";
 
 function basicDetails ( user: UserDoc ) {
   const { firstName, lastName, email } = user;

@@ -5,10 +5,10 @@ module.exports = {
     images: {
       domains: ['randomuser.me'],
     },
-    webpackDevMiddleware: config => {
-      config.watchOptions.poll = 300;
-      return config;
-    },
+    // webpackDevMiddleware: config => {
+    //   config.watchOptions.poll = 300;
+    //   return config;
+    // },
     reactStrictMode: true,
     i18n
   };

@@ -1,9 +1,8 @@
-import 'module-alias/register';
 import express, { json } from 'express';
 import 'express-async-errors';
-import { errorHandler } from '@middleware/error-handler';
-import userRouter from '@routes/user-router';
-import { NotFoundError } from '@errors/not-found-error';
+import { errorHandler } from '@aspianet/common';
+import userRouter from './routes/user-router';
+import { NotFoundError } from '@aspianet/common';
 import cookieParser from 'cookie-parser';
 
 const app = express();
