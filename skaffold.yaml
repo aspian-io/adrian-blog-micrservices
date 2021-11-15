@@ -24,3 +24,11 @@ build:
         manual:
           - src: '**/*.{tsx,ts,js}'
             dest: .
+    - image: aspian/taxonomy
+      context: taxonomy
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taxonomy-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: taxonomy-mongo
+  template:
+    metadata:
+      labels:
+        app: taxonomy-mongo
+    spec:
+      containers:
+        - name: taxonomy-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: taxonomy-mongo-srv
+spec:
+  selector:
+    app: taxonomy-mongo
+  ports:
+    - name: db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-depl
+  name: taxonomy-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth
+      app: taxonomy
   template:
     metadata:
       labels:
-        app: auth
+        app: taxonomy
     spec:
       containers:
-        - name: auth
-          image: aspian/auth
+        - name: taxonomy
+          image: aspian/taxonomy
           env:
             - name: MONGO_URI
-              value: 'mongodb://auth-mongo-srv:27017/auth'
+              value: 'mongodb://taxonomy-mongo-srv:27017/taxonomy'
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
@@ -27,12 +27,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-srv
+  name: taxonomy-srv
 spec:
   selector:
-    app: auth
+    app: taxonomy
   ports:
-    - name: auth
+    - name: taxonomy
       protocol: TCP
       port: 3000
       targetPort: 3000
