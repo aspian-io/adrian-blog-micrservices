@@ -1,7 +1,7 @@
 import { authorize, requireAuth, validateRequest } from "@aspianet/common";
 import express from "express";
 import create from "../controllers/create";
-import createSchema from "../validation-schema/create-schema";
+import createSchema from "../validation-schemas/create-schema";
 import { TaxonomyPolicies } from "./taxonomy-policies";
 
 const taxonomyRouter = express.Router();
