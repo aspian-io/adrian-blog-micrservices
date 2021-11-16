@@ -2,11 +2,13 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../app';
+import jwt from 'jsonwebtoken';
+import { TaxonomyPolicies } from '../routes/taxonomy-policies';
 
-jest.setTimeout( 200000 );
+//jest.setTimeout( 200000 );
 
 declare global {
-  var signup: () => Promise<string[]>;
+  var signup: ( policies: TaxonomyPolicies[] ) => string;
 }
 
 let mongo: any;
@@ -35,20 +37,14 @@ afterAll( async () => {
   await mongoose.connection.close();
 } );
 
-global.signup = async () => {
-  const firstName = "fName";
-  const lastName = "lName";
-  const email = 'test@test.com';
-  const password = 'password';
+global.signup = ( policies: TaxonomyPolicies[] ) => {
+  const payload = {
+    id: mongoose.Types.ObjectId(),
+    email: 'test@test.com',
+    claims: policies
+  }
 
-  const response = await request( app )
-    .post( '/api/users/signup' )
-    .send( {
-      firstName, lastName, email, password
-    } )
-    .expect( 201 );
+  const token = jwt.sign( payload, process.env.JWT_KEY! );
 
-  const cookie = response.get( 'Set-Cookie' );
-
-  return cookie;
+  return token;
 };

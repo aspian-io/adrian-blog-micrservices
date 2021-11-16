@@ -1,9 +1,8 @@
 import express, { json } from 'express';
 import 'express-async-errors';
-import { errorHandler } from '@aspianet/common';
 import userRouter from './routes/user-router';
-import { NotFoundError } from '@aspianet/common';
 import cookieParser from 'cookie-parser';
+import { errorHandler, NotFoundError } from '@aspianet/common';
 
 const app = express();
 app.set( 'trust proxy', true );
