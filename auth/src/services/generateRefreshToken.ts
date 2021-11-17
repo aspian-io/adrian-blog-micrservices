@@ -4,7 +4,8 @@ import randomTokenString from "./randomTokenString";
 
 function generateRefreshToken ( user: UserDoc, ipAddress: string ) {
   // create a refresh token that expires in 7 days
-  return new RefreshToken( {
+
+  return RefreshToken.build( {
     user: user.id,
     token: randomTokenString(),
     expires: new Date( Date.now() + 7 * 24 * 60 * 60 * 1000 ),

@@ -4,14 +4,8 @@ import { UserDoc } from './user';
 interface RefreshTokenAttrs {
   user: PopulatedDoc<UserDoc>;
   token: string;
-  expires: number;
-  created: Date;
+  expires: Date;
   createdByIp: string;
-  revoked: number;
-  revokedByIp: string;
-  replacedByToken: string;
-  isExpired: boolean;
-  isActive: boolean;
 }
 
 interface RefreshTokenModel extends mongoose.Model<RefreshTokenDoc> {
@@ -21,7 +15,7 @@ interface RefreshTokenModel extends mongoose.Model<RefreshTokenDoc> {
 interface RefreshTokenDoc extends mongoose.Document {
   user: PopulatedDoc<UserDoc>;
   token: string;
-  expires: number;
+  expires: Date;
   created: Date;
   createdByIp: string;
   revoked: number;
@@ -56,11 +50,11 @@ refreshTokenSchema.statics.build = ( attrs: RefreshTokenAttrs ) => {
   return new RefreshToken( attrs );
 };
 
-refreshTokenSchema.virtual( 'isExpired' ).get( function ( this: RefreshTokenAttrs ) {
-  return Date.now() >= this.expires;
+refreshTokenSchema.virtual( 'isExpired' ).get( function ( this: RefreshTokenDoc ) {
+  return Date.now() >= this.expires.getTime();
 } );
 
-refreshTokenSchema.virtual( 'isActive' ).get( function ( this: RefreshTokenAttrs ) {
+refreshTokenSchema.virtual( 'isActive' ).get( function ( this: RefreshTokenDoc ) {
   return !this.revoked && !this.isExpired;
 } );
 

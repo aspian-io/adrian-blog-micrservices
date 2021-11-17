@@ -12,7 +12,6 @@ interface UserAttrs {
   password: string;
   createdByIp: string;
   lastIp: string;
-  claims?: PopulatedDoc<ClaimDoc>
 }
 
 export interface UserModel extends mongoose.Model<UserDoc> {

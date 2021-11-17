@@ -2,7 +2,6 @@ import mongoose, { PopulatedDoc } from 'mongoose';
 import { UserDoc } from './user';
 
 interface ClaimAttrs {
-  user: PopulatedDoc<UserDoc>;
   claim: string;
 }
 
