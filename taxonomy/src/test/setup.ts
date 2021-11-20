@@ -1,14 +1,14 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import request from 'supertest';
-import { app } from '../app';
 import jwt from 'jsonwebtoken';
 import { TaxonomyPolicies } from '../routes/taxonomy-policies';
+import { TaxonomyTypeEnum } from '../models/taxonomy';
 
 //jest.setTimeout( 200000 );
 
 declare global {
-  var signup: ( policies: TaxonomyPolicies[] ) => string;
+  var test_signup: ( policies: string[] ) => string;
+  var test_taxonomyData: { type: TaxonomyTypeEnum, description: string, term: string, slug: string };
 }
 
 let mongo: any;
@@ -18,10 +18,7 @@ beforeAll( async () => {
   mongo = await MongoMemoryServer.create();
   const mongoUri = mongo.getUri();
 
-  await mongoose.connect( mongoUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  } )
+  await mongoose.connect( mongoUri );
 } );
 
 beforeEach( async () => {
@@ -37,9 +34,9 @@ afterAll( async () => {
   await mongoose.connection.close();
 } );
 
-global.signup = ( policies: TaxonomyPolicies[] ) => {
+global.test_signup = ( policies: string[] ) => {
   const payload = {
-    id: mongoose.Types.ObjectId(),
+    id: new mongoose.Types.ObjectId(),
     email: 'test@test.com',
     claims: policies
   }
@@ -47,4 +44,11 @@ global.signup = ( policies: TaxonomyPolicies[] ) => {
   const token = jwt.sign( payload, process.env.JWT_KEY! );
 
   return token;
+};
+
+global.test_taxonomyData = {
+  type: TaxonomyTypeEnum.CATEGORY,
+  description: "",
+  term: "test category 1",
+  slug: "test-category-1",
 };

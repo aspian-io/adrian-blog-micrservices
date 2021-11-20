@@ -43,8 +43,11 @@ const refreshTokenSchema = new mongoose.Schema( {
     },
     versionKey: false,
     virtuals: true
-  }
+  },
+  timestamps: true
 } );
+
+//refreshTokenSchema.index({createdAt: 1}, {expireAfterSeconds: 7 * 24 * 60 * 60})
 
 refreshTokenSchema.statics.build = ( attrs: RefreshTokenAttrs ) => {
   return new RefreshToken( attrs );

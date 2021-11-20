@@ -5,7 +5,7 @@ import authenticate from '../services/authenticate';
 async function signin ( req: Request, res: Response, next: NextFunction ) {
   const { email, password } = req.body;
   const ipAddress = req.ip;
-  try {
+  try { 
     const { refreshToken, ...user } = await authenticate( { email, password, ipAddress } );
     setTokenCookie( res, refreshToken );
     res.status( 200 ).send( user );
