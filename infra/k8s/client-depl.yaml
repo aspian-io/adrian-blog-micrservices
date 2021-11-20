@@ -15,6 +15,12 @@ spec:
       containers:
         - name: client
           image: aspian/client
+          env:
+            - name: MAPBOX_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: mapbox-secret
+                  key: MAPBOX_TOKEN
 ---
 apiVersion: v1
 kind: Service

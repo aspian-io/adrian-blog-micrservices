@@ -20,14 +20,14 @@ import { IUser } from '../src/app/models/auth';
 
 interface IProps {
   currentUser?: IUser;
+  mapboxAccessToken: string;
 }
 
-const Home: NextPage = () => {
+const Home: NextPage<IProps> = ({ mapboxAccessToken }) => {
   const auth = useSelector(({ auth }: IStoreState) => auth);
-  
+
   useEffect(() => {
-    mapboxgl.accessToken =
-      'pk.eyJ1Ijoib21pZHI2NiIsImEiOiJja3VncWNzMWkwYzJuMnVxdnE5dDVhZm5yIn0.8mW-ncIEgxE2ONA_Nlz9Nw';
+    mapboxgl.accessToken = mapboxAccessToken;
     const map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v11',
@@ -489,16 +489,13 @@ const Home: NextPage = () => {
   );
 };
 
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   //const { data } = await buildClient(context).get('/api/users/current-user');
-
-//   console.log('Hello from server!!!!');
-
-//   return {
-//     props: {
-
-//     },
-//   };
-// };
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const mapboxAccessToken = process.env.MAPBOX_TOKEN;
+  return {
+    props: {
+      mapboxAccessToken,
+    },
+  };
+};
 
 export default Home;
