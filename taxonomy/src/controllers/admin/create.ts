@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Taxonomy } from '../models/taxonomy';
+import { Taxonomy } from '../../models/taxonomy';
 
 async function create ( req: Request, res: Response ) {
   const { type, description, term, slug } = req.body;

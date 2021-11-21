@@ -13,6 +13,8 @@ interface TaxonomyAttrs {
   slug: string;
   createdBy: string;
   createdByIp: string;
+  updatedBy?: string;
+  updatedByIp?: string;
 }
 
 interface TaxonomyDoc extends mongoose.Document {
@@ -22,6 +24,8 @@ interface TaxonomyDoc extends mongoose.Document {
   slug: string;
   createdBy: string;
   createdByIp: string;
+  updatedBy?: string;
+  updatedByIp?: string;
 }
 
 interface TaxonomyModel extends mongoose.Model<TaxonomyDoc> {
@@ -34,7 +38,9 @@ const taxonomySchema = new Schema<TaxonomyAttrs, Model<TaxonomyAttrs>, TaxonomyA
   term: { type: String, required: true },
   slug: { type: String, required: true },
   createdBy: { type: String, required: true },
-  createdByIp: { type: String, required: true }
+  createdByIp: { type: String, required: true },
+  updatedBy: { type: String, required: false },
+  updatedByIp: { type: String, required: false }
 }, {
   toJSON: {
     transform ( doc, ret ) {

@@ -1,12 +1,12 @@
 import request from 'supertest';
-import { app } from '../../app';
-import { Taxonomy } from '../../models/taxonomy';
-import { TaxonomyPolicies } from '../../routes/taxonomy-policies';
+import { app } from '../../../app';
+import { Taxonomy } from '../../../models/taxonomy';
+import { TaxonomyPolicies } from '../routes/taxonomy-policies';
 import { CorePolicies } from '@aspianet/common';
 
 it( 'has a route handler listening to /api/taxonomies/create for post requests', async () => {
   const response = await request( app )
-    .post( '/api/taxonomies/create' )
+    .post( '/api/admin/taxonomies/create' )
     .send( {} );
 
   expect( response.status ).not.toEqual( 404 );
@@ -14,7 +14,7 @@ it( 'has a route handler listening to /api/taxonomies/create for post requests',
 
 it( 'can only be accessed if the user is signed in', async () => {
   const response = await request( app )
-    .post( '/api/taxonomies/create' )
+    .post( '/api/admin/taxonomies/create' )
     .send( {} );
 
   expect( response.status ).toEqual( 401 );
@@ -22,7 +22,7 @@ it( 'can only be accessed if the user is signed in', async () => {
 
 it( 'returns a status other than 401 if the user is signed in', async () => {
   const response = await request( app )
-    .post( '/api/taxonomies/create' )
+    .post( '/api/admin/taxonomies/create' )
     .set( 'authorization', global.test_signup( [] ) )
     .send( {} );
 
@@ -31,7 +31,7 @@ it( 'returns a status other than 401 if the user is signed in', async () => {
 
 it( 'returns a status other than 403 if the user is authorized', async () => {
   const response = await request( app )
-    .post( '/api/taxonomies/create' )
+    .post( '/api/admin/taxonomies/create' )
     .set( 'authorization', global.test_signup( [ TaxonomyPolicies.TaxonomyClaims__CREATE ] ) )
     .send( {} );
 
@@ -40,7 +40,7 @@ it( 'returns a status other than 403 if the user is authorized', async () => {
 
 it( 'returns an error if an invalid title is provided', async () => {
   await request( app )
-    .post( '/api/taxonomies/create' )
+    .post( '/api/admin/taxonomies/create' )
     .set( 'authorization', global.test_signup( [ TaxonomyPolicies.TaxonomyClaims__CREATE ] ) )
     .send( {
       title: '',
@@ -49,7 +49,7 @@ it( 'returns an error if an invalid title is provided', async () => {
     .expect( 400 );
 
   await request( app )
-    .post( '/api/taxonomies/create' )
+    .post( '/api/admin/taxonomies/create' )
     .set( 'authorization', global.test_signup( [ TaxonomyPolicies.TaxonomyClaims__CREATE ] ) )
     .send( {
       description: ''
@@ -62,7 +62,7 @@ it( 'creates a taxonomy with valid inputs', async () => {
   expect( taxonomies.length ).toEqual( 0 );
 
   await request( app )
-    .post( '/api/taxonomies/create' )
+    .post( '/api/admin/taxonomies/create' )
     .set( 'authorization', global.test_signup( [ TaxonomyPolicies.TaxonomyClaims__CREATE, CorePolicies.CoreClaims__ADMIN ] ) )
     .send( global.test_taxonomyData )
     .expect( 201 );

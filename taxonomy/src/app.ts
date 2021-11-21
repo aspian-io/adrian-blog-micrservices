@@ -1,14 +1,14 @@
 import express, { json } from 'express';
 import 'express-async-errors';
 import { NotFoundError, errorHandler, currentUser } from '@aspianet/common';
-import taxonomyRouter from './routes/taxonomy-router';
+import taxonomyRouter from './controllers/admin/routes/taxonomy-router';
 
 const app = express();
 app.set( 'trust proxy', true );
 app.use( json() );
 
 app.use( currentUser );
-app.use( '/api/taxonomies', taxonomyRouter );
+app.use( '/api/admin/taxonomies', taxonomyRouter );
 
 app.all( '*', async ( req, res ) => {
   throw new NotFoundError();

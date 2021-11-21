@@ -6,8 +6,7 @@ import getCurrentUser from '../controllers/current-user';
 import signupSchema from '../validation-schemas/signup-schema';
 import signinSchema from '../validation-schemas/signin-schema';
 import refreshToken from '../controllers/refresh-token';
-import { validateRequest } from '@aspianet/common';
-import currentUser from '../controllers/current-user';
+import { currentUser, validateRequest } from '@aspianet/common';
 
 const userRouter = express.Router();
 

@@ -17,6 +17,13 @@ spec:
                 name: auth-srv
                 port:
                   number: 3000
+          - path: /api/admin/taxonomies/?(.*)
+            pathType: Exact
+            backend:
+              service:
+                name: taxonomy-srv
+                port:
+                  number: 3000
           - path: /?(.*)
             pathType: Exact
             backend:
