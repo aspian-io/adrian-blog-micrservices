@@ -1,7 +1,7 @@
 import revokeToken from '../services/revokeToken';
 import { NextFunction, Request, Response } from 'express';
 
-async function signout ( req: Request, res: Response, next: NextFunction ) {
+async function signoutController ( req: Request, res: Response, next: NextFunction ) {
   const token = req.cookies.refreshToken;
   const ipAddress = req.ip;
   try {
@@ -11,4 +11,4 @@ async function signout ( req: Request, res: Response, next: NextFunction ) {
   res.status( 200 ).send( {} );
 };
 
-export default signout;
+export default signoutController;

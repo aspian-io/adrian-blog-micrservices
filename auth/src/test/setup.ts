@@ -1,12 +1,11 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import request from 'supertest';
-import { app } from '../app';
+import jwt from 'jsonwebtoken';
 
-jest.setTimeout( 200000 );
+//jest.setTimeout( 200000 );
 
 declare global {
-  var signup: () => Promise<string[]>;
+  var test_signup: ( policies: string[] ) => string;
 }
 
 let mongo: any;
@@ -16,10 +15,7 @@ beforeAll( async () => {
   mongo = await MongoMemoryServer.create();
   const mongoUri = mongo.getUri();
 
-  await mongoose.connect( mongoUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  } )
+  await mongoose.connect( mongoUri );
 } );
 
 beforeEach( async () => {
@@ -35,20 +31,14 @@ afterAll( async () => {
   await mongoose.connection.close();
 } );
 
-global.signup = async () => {
-  const firstName = "fName";
-  const lastName = "lName";
-  const email = 'test@test.com';
-  const password = 'password';
+global.test_signup = ( policies: string[] ) => {
+  const payload = {
+    id: new mongoose.Types.ObjectId(),
+    email: 'test@test.com',
+    claims: policies
+  }
 
-  const response = await request( app )
-    .post( '/api/users/signup' )
-    .send( {
-      firstName, lastName, email, password
-    } )
-    .expect( 201 );
+  const token = jwt.sign( payload, process.env.JWT_KEY! );
 
-  const cookie = response.get( 'Set-Cookie' );
-
-  return cookie;
+  return token;
 };

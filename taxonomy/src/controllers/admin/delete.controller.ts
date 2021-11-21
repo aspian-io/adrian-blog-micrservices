@@ -2,14 +2,16 @@ import { NotFoundError } from "@aspianet/common";
 import { NextFunction, Request, Response } from "express";
 import { Taxonomy } from "../../models/taxonomy";
 
-async function details ( req: Request, res: Response, next: NextFunction ) {
+async function deleteController ( req: Request, res: Response, next: NextFunction ) {
   const taxonomy = await Taxonomy.findById( req.params.id );
 
   if ( !taxonomy ) {
     throw new NotFoundError();
   }
 
-  res.send( taxonomy );
+  await taxonomy.delete();
+
+  res.send( {} );
 }
 
-export default details;
+export default deleteController;

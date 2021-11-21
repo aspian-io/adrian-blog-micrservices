@@ -1,8 +1,7 @@
-import { CorePolicies } from '@aspianet/common';
+import { CorePolicies, TaxonomyPolicies } from '@aspianet/common';
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../../../app';
-import { TaxonomyPolicies } from '../routes/taxonomy-policies';
 
 it( 'returns a 404 if the taxonomy is not found', async () => {
   await request( app )

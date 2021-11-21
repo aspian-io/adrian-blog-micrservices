@@ -4,7 +4,7 @@ import authenticate from '../services/authenticate';
 import setTokenCookie from '../helpers/cookie';
 import { BadRequestError } from '@aspianet/common';
 
-async function signup ( req: Request, res: Response, next: NextFunction ) {
+async function signupController ( req: Request, res: Response, next: NextFunction ) {
   const { firstName, lastName, email, password } = req.body;
   const ipAddress = req.ip;
   const existingUser = await User.findOne( { email } );
@@ -23,4 +23,4 @@ async function signup ( req: Request, res: Response, next: NextFunction ) {
   }
 };
 
-export default signup;
+export default signupController;

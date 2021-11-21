@@ -1,19 +1,19 @@
 import express from 'express';
-import signout from '../controllers/signout';
-import signup from '../controllers/signup';
-import signin from '../controllers/signin';
-import getCurrentUser from '../controllers/current-user';
+import signoutController from '../controllers/signout.controller';
+import signupController from '../controllers/signup.controller';
+import signinController from '../controllers/signin.controller';
+import currentUserController from '../controllers/current-user.controller';
 import signupSchema from '../validation-schemas/signup-schema';
 import signinSchema from '../validation-schemas/signin-schema';
-import refreshToken from '../controllers/refresh-token';
+import refreshTokenController from '../controllers/refresh-token.controller';
 import { currentUser, validateRequest } from '@aspianet/common';
 
 const userRouter = express.Router();
 
-userRouter.post( '/signup', signupSchema, validateRequest, signup );
-userRouter.post( '/signin', signinSchema, validateRequest, signin );
-userRouter.post( '/signout', signout );
-userRouter.get( '/current-user', currentUser, getCurrentUser );
-userRouter.get( '/refresh-token', refreshToken );
+userRouter.post( '/signup', signupSchema, validateRequest, signupController );
+userRouter.post( '/signin', signinSchema, validateRequest, signinController );
+userRouter.post( '/signout', signoutController );
+userRouter.get( '/current-user', currentUser, currentUserController );
+userRouter.get( '/refresh-token', refreshTokenController );
 
 export default userRouter;

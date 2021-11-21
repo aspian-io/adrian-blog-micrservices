@@ -1,7 +1,6 @@
-import { CorePolicies } from '@aspianet/common';
+import { CorePolicies, TaxonomyPolicies } from '@aspianet/common';
 import request from 'supertest';
 import { app } from '../../../app';
-import { TaxonomyPolicies } from '../routes/taxonomy-policies';
 
 const createTaxonoy = () => {
   return request( app )
@@ -17,7 +16,7 @@ it( 'can fetch a list of taxonomies', async () => {
 
   const response = await request( app )
     .get( '/api/admin/taxonomies' )
-    .set( 'authorization', global.test_signup( [ TaxonomyPolicies.TaxonomyClaims__CREATE, CorePolicies.CoreClaims__ADMIN ] ) )
+    .set( 'authorization', global.test_signup( [ TaxonomyPolicies.TaxonomyClaims__LIST, CorePolicies.CoreClaims__ADMIN ] ) )
     .send()
     .expect( 200 );
 

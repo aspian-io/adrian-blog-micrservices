@@ -1,8 +1,7 @@
 import request from 'supertest';
 import mongoose from 'mongoose';
 import { app } from '../../../app';
-import { TaxonomyPolicies } from '../routes/taxonomy-policies';
-import { CorePolicies } from '@aspianet/common';
+import { CorePolicies, TaxonomyPolicies } from '@aspianet/common';
 import { TaxonomyTypeEnum } from '../../../models/taxonomy';
 
 it( 'returns 404 if the provided id does not exist', async () => {

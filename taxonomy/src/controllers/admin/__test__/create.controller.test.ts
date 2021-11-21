@@ -1,8 +1,7 @@
 import request from 'supertest';
 import { app } from '../../../app';
 import { Taxonomy } from '../../../models/taxonomy';
-import { TaxonomyPolicies } from '../routes/taxonomy-policies';
-import { CorePolicies } from '@aspianet/common';
+import { CorePolicies, TaxonomyPolicies } from '@aspianet/common';
 
 it( 'has a route handler listening to /api/taxonomies/create for post requests', async () => {
   const response = await request( app )

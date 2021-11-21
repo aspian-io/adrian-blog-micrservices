@@ -2,11 +2,9 @@ import request from 'supertest';
 import { app } from '../../app';
 
 it( 'response with datails about the current user', async () => {
-  const cookie = await signup();
-
   const response = await request( app )
     .get( '/api/users/current-user' )
-    .set( 'Cookie', cookie )
+    .set( 'authorization', global.test_signup( [] ) )
     .send()
     .expect( 200 );
 

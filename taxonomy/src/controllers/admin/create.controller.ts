@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { Taxonomy } from '../../models/taxonomy';
 
-async function create ( req: Request, res: Response ) {
+async function createController ( req: Request, res: Response ) {
   const { type, description, term, slug } = req.body;
 
   const taxonomy = Taxonomy.build( { type, description, term, slug, createdBy: req.currentUser!.id, createdByIp: req.ip } );
@@ -10,4 +10,4 @@ async function create ( req: Request, res: Response ) {
   res.status( 201 ).send( taxonomy );
 }
 
-export default create;
+export default createController;

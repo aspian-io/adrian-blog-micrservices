@@ -34,7 +34,7 @@ const Home: NextPage<IProps> = ({ mapboxAccessToken }) => {
       center: [-71.060982, 42.35725],
       zoom: 18,
     });
-  }, []);
+  }, [mapboxAccessToken]);
 
   return (
     <>

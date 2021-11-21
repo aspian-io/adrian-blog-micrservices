@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import refreshTokenService from '../services/refreshToken';
 import setTokenCookie from '../helpers/cookie';
 
-async function refreshToken ( req: Request, res: Response, next: NextFunction ) {
+async function refreshTokenController ( req: Request, res: Response, next: NextFunction ) {
   const token = req.cookies.refreshToken;
   const ipAddress = req.ip;
   try {
@@ -12,4 +12,4 @@ async function refreshToken ( req: Request, res: Response, next: NextFunction ) 
   } catch ( error ) { next( error ) }
 };
 
-export default refreshToken;
+export default refreshTokenController;

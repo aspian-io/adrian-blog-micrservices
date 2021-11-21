@@ -1,7 +1,6 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
-import { TaxonomyPolicies } from '../controllers/admin/routes/taxonomy-policies';
 import { TaxonomyTypeEnum } from '../models/taxonomy';
 
 //jest.setTimeout( 200000 );
