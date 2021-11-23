@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+nats-test
+auth/src/models/seeder.ts

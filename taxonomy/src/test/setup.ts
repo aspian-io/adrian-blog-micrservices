@@ -1,7 +1,7 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
-import { TaxonomyTypeEnum } from '../models/taxonomy';
+import { TaxonomyTypeEnum } from '@aspianet/common';
 
 //jest.setTimeout( 200000 );
 
@@ -9,6 +9,8 @@ declare global {
   var test_signup: ( policies: string[] ) => string;
   var test_taxonomyData: { type: TaxonomyTypeEnum, description: string, term: string, slug: string };
 }
+
+jest.mock( '../nats-wrapper' );
 
 let mongo: any;
 beforeAll( async () => {
@@ -21,6 +23,7 @@ beforeAll( async () => {
 } );
 
 beforeEach( async () => {
+  jest.clearAllMocks();
   const collections = await mongoose.connection.db.collections();
 
   for ( let collection of collections ) {

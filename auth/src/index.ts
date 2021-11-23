@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { app } from './app';
+import { seeder } from './models/seeder';
 
 const start = async () => {
   if ( !process.env.JWT_KEY ) {
@@ -14,6 +15,10 @@ const start = async () => {
     console.log( 'Connected to MongoDb' );
   } catch ( err ) {
     console.error( err );
+  }
+
+  if ( process.env.SEEDER ) {
+    await seeder();
   }
 
   app.listen( 3000, () => {

@@ -16,6 +16,8 @@ spec:
         - name: auth
           image: aspian/auth
           env:
+            - name: SEEDER
+              value: 'true'
             - name: MONGO_URI
               value: 'mongodb://auth-mongo-srv:27017/auth'
             - name: JWT_KEY

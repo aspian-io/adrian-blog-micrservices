@@ -2,6 +2,7 @@ import request from 'supertest';
 import { app } from '../../../app';
 import { Taxonomy } from '../../../models/taxonomy';
 import { CorePolicies, TaxonomyPolicies } from '@aspianet/common';
+import { natsWrapper } from '../../../nats-wrapper';
 
 it( 'has a route handler listening to /api/taxonomies/create for post requests', async () => {
   const response = await request( app )
@@ -72,4 +73,14 @@ it( 'creates a taxonomy with valid inputs', async () => {
   expect( taxonomies[ 0 ].description ).toEqual( global.test_taxonomyData.description );
   expect( taxonomies[ 0 ].term ).toEqual( global.test_taxonomyData.term );
   expect( taxonomies[ 0 ].slug ).toEqual( global.test_taxonomyData.slug );
+} );
+
+it( 'publishesh an event', async () => {
+  await request( app )
+    .post( '/api/admin/taxonomies/create' )
+    .set( 'authorization', global.test_signup( [ TaxonomyPolicies.TaxonomyClaims__CREATE, CorePolicies.CoreClaims__ADMIN ] ) )
+    .send( global.test_taxonomyData )
+    .expect( 201 );
+
+  expect( natsWrapper.client.publish ).toHaveBeenCalled();
 } );

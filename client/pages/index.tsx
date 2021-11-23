@@ -13,7 +13,6 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import React, { useEffect } from 'react';
 import styles from '../styles/Home.module.scss';
-import buildClient from '../api/build-client';
 import { useSelector } from 'react-redux';
 import { IStoreState } from '../src/app/store/rootReducerTypes';
 import { IUser } from '../src/app/models/auth';

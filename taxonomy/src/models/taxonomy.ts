@@ -1,10 +1,5 @@
+import { TaxonomyTypeEnum } from '@aspianet/common';
 import mongoose, { model, Model, ObjectId, Schema } from 'mongoose';
-
-export enum TaxonomyTypeEnum {
-  NAV_MENU = "NAV_MENU",
-  CATEGORY = "CATEGORY",
-  TAG = "TAG"
-}
 
 interface TaxonomyAttrs {
   type: TaxonomyTypeEnum;

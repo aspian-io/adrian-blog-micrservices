@@ -1,8 +1,8 @@
 import request from 'supertest';
 import mongoose from 'mongoose';
 import { app } from '../../../app';
-import { CorePolicies, TaxonomyPolicies } from '@aspianet/common';
-import { TaxonomyTypeEnum } from '../../../models/taxonomy';
+import { CorePolicies, TaxonomyPolicies, TaxonomyTypeEnum } from '@aspianet/common';
+import { natsWrapper } from '../../../nats-wrapper';
 
 it( 'returns 404 if the provided id does not exist', async () => {
   await request( app )
@@ -71,4 +71,25 @@ it( 'updates the taxonomy provided valid inputs', async () => {
 
   expect( taxonomyResponse.body.term ).toEqual( "test category 1 edited" );
   expect( taxonomyResponse.body.slug ).toEqual( "test-category-1-edited" );
+} );
+
+it( 'publishesh an event', async () => {
+  const response = await request( app )
+    .post( '/api/admin/taxonomies/create' )
+    .set( 'authorization', global.test_signup( [ TaxonomyPolicies.TaxonomyClaims__CREATE, CorePolicies.CoreClaims__ADMIN ] ) )
+    .send( global.test_taxonomyData )
+    .expect( 201 );
+
+  await request( app )
+    .put( `/api/admin/taxonomies/edit/${ response.body.id }` )
+    .set( 'authorization', global.test_signup( [ TaxonomyPolicies.TaxonomyClaims__EDIT, CorePolicies.CoreClaims__ADMIN ] ) )
+    .send( {
+      type: TaxonomyTypeEnum.CATEGORY,
+      description: "",
+      term: "test category 1 edited",
+      slug: "test-category-1-edited",
+    } )
+    .expect( 200 );
+
+  expect( natsWrapper.client.publish ).toHaveBeenCalled();
 } );
