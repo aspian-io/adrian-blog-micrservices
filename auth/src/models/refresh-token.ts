@@ -2,7 +2,7 @@ import mongoose, { PopulatedDoc } from 'mongoose';
 import { UserDoc } from './user';
 
 interface RefreshTokenAttrs {
-  user: PopulatedDoc<UserDoc>;
+  user: UserDoc;
   token: string;
   expires: Date;
   createdByIp: string;
@@ -13,7 +13,7 @@ interface RefreshTokenModel extends mongoose.Model<RefreshTokenDoc> {
 }
 
 interface RefreshTokenDoc extends mongoose.Document {
-  user: PopulatedDoc<UserDoc>;
+  user: UserDoc;
   token: string;
   expires: Date;
   created: Date;
@@ -41,7 +41,7 @@ const refreshTokenSchema = new mongoose.Schema( {
       delete ret._id;
       delete ret.user;
     },
-    versionKey: false,
+    versionKey: true,
     virtuals: true
   },
   timestamps: true

@@ -12,6 +12,7 @@ interface UserAttrs {
   password: string;
   createdByIp: string;
   lastIp: string;
+  claims?: ClaimDoc[]
 }
 
 export interface UserModel extends mongoose.Model<UserDoc> {
@@ -28,7 +29,7 @@ export interface UserDoc extends mongoose.Document {
   password: string;
   createdByIp: string;
   lastIp: string;
-  claims?: PopulatedDoc<ClaimDoc>
+  claims?: ClaimDoc[]
 }
 
 const userSchema = new mongoose.Schema( {
@@ -49,7 +50,7 @@ const userSchema = new mongoose.Schema( {
       delete ret._id;
       delete ret.password;
     },
-    versionKey: false,
+    versionKey: true,
     virtuals: true
   },
   timestamps: true

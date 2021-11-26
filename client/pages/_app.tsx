@@ -30,7 +30,7 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
     appContext.ctx.res?.setHeader('authorization', axiosRes.data.jwtToken);
     appProps.pageProps.currentUser = axiosRes.data;
   } catch (error) {
-    console.error('Something went wrong getting the current user');
+    console.error(error.message);
     appProps.pageProps.currentUser = null;
   }
   if (appContext.Component.getInitialProps) {

@@ -2,6 +2,7 @@ import mongoose, { PopulatedDoc } from 'mongoose';
 import { UserDoc } from './user';
 
 interface ClaimAttrs {
+  user: UserDoc;
   claim: string;
 }
 
@@ -10,7 +11,7 @@ export interface ClaimModel extends mongoose.Model<ClaimDoc> {
 }
 
 export interface ClaimDoc extends mongoose.Document {
-  user: PopulatedDoc<ClaimDoc>;
+  user: UserDoc;
   claim: string;
 }
 
@@ -23,7 +24,7 @@ const claimSchema = new mongoose.Schema( {
       ret.id = ret._id;
       delete ret._id;
     },
-    versionKey: false,
+    versionKey: true,
     virtuals: true
   },
   timestamps: true

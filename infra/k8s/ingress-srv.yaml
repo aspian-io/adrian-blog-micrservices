@@ -24,6 +24,13 @@ spec:
                 name: taxonomy-srv
                 port:
                   number: 3000
+          - path: /api/admin/posts/?(.*)
+            pathType: Exact
+            backend:
+              service:
+                name: post-srv
+                port:
+                  number: 3000
           - path: /?(.*)
             pathType: Exact
             backend:

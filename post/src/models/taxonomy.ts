@@ -1,32 +1,26 @@
 import { TaxonomyTypeEnum } from '@aspianet/common';
-import mongoose, { model, Model, ObjectId, Schema } from 'mongoose';
+import mongoose, { model, Model, Schema } from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 interface TaxonomyAttrs {
+  id: string;
   type: TaxonomyTypeEnum;
   description: string;
   term: string;
   slug: string;
-  createdBy: string;
-  createdByIp: string;
-  updatedBy?: string;
-  updatedByIp?: string;
 }
 
-interface TaxonomyDoc extends mongoose.Document {
+export interface TaxonomyDoc extends mongoose.Document {
   type: TaxonomyTypeEnum;
   description: string;
   term: string;
   slug: string;
-  createdBy: string;
-  createdByIp: string;
-  updatedBy?: string;
-  updatedByIp?: string;
   version: number;
 }
 
 interface TaxonomyModel extends mongoose.Model<TaxonomyDoc> {
   build ( attrs: TaxonomyAttrs ): TaxonomyDoc;
+  findByEvent ( event: { id: string, version: number } ): Promise<TaxonomyDoc | null>;
 }
 
 const taxonomySchema = new Schema<TaxonomyDoc, Model<TaxonomyDoc>>( {
@@ -34,10 +28,6 @@ const taxonomySchema = new Schema<TaxonomyDoc, Model<TaxonomyDoc>>( {
   description: { type: String, required: false },
   term: { type: String, required: true },
   slug: { type: String, required: true },
-  createdBy: { type: String, required: true },
-  createdByIp: { type: String, required: true },
-  updatedBy: { type: String, required: false },
-  updatedByIp: { type: String, required: false }
 }, {
   toJSON: {
     transform ( doc, ret ) {
@@ -53,7 +43,19 @@ taxonomySchema.set( 'versionKey', 'version' );
 taxonomySchema.plugin( updateIfCurrentPlugin );
 
 taxonomySchema.statics.build = ( attrs: TaxonomyAttrs ) => {
-  return new Taxonomy( attrs );
+  return new Taxonomy( {
+    _id: attrs.id,
+    type: attrs.type,
+    description: attrs.description,
+    term: attrs.term,
+    slug: attrs.slug
+  } );
+}
+taxonomySchema.statics.findByEvent = ( event: { id: string, version: number } ) => {
+  return Taxonomy.findOne( {
+    _id: event.id,
+    version: event.version - 1
+  } );
 }
 
 const Taxonomy = model<TaxonomyDoc, TaxonomyModel>( 'Taxonomy', taxonomySchema );

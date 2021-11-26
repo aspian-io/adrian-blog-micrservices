@@ -8,10 +8,10 @@ import createSchema from "../../../validation-schemas/create-schema";
 import editSchema from "../../../validation-schemas/edit-schema";
 import deleteController from "../delete.controller";
 
-const taxonomyRouter = express.Router();
+const taxonomyAdminRouter = express.Router();
 
 // GET: List of Taxonomies
-taxonomyRouter.get(
+taxonomyAdminRouter.get(
   '/',
   requireAuth,
   authorize( [ TaxonomyPolicies.TaxonomyClaims__DETAILS, CorePolicies.CoreClaims__ADMIN ] ),
@@ -19,7 +19,7 @@ taxonomyRouter.get(
 );
 
 // GET: Get a Taxonomy by Id
-taxonomyRouter.get(
+taxonomyAdminRouter.get(
   '/:id',
   requireAuth,
   authorize( [ TaxonomyPolicies.TaxonomyClaims__DETAILS, CorePolicies.CoreClaims__ADMIN ] ),
@@ -27,7 +27,7 @@ taxonomyRouter.get(
 );
 
 // POST: Create a Taxonomy
-taxonomyRouter.post(
+taxonomyAdminRouter.post(
   '/create',
   requireAuth,
   authorize( [ TaxonomyPolicies.TaxonomyClaims__CREATE, CorePolicies.CoreClaims__ADMIN ] ),
@@ -37,7 +37,7 @@ taxonomyRouter.post(
 );
 
 // PUT: Edit a Taxonomy
-taxonomyRouter.put(
+taxonomyAdminRouter.put(
   '/edit/:id',
   requireAuth,
   authorize( [ TaxonomyPolicies.TaxonomyClaims__EDIT, CorePolicies.CoreClaims__ADMIN ] ),
@@ -47,11 +47,11 @@ taxonomyRouter.put(
 );
 
 // DELETE: Delete a Taxonomy
-taxonomyRouter.delete(
+taxonomyAdminRouter.delete(
   '/delete/:id',
   requireAuth,
   authorize( [ TaxonomyPolicies.TaxonomyClaims__DELETE, CorePolicies.CoreClaims__ADMIN ] ),
   deleteController
 );
 
-export default taxonomyRouter;
+export default taxonomyAdminRouter;
