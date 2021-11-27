@@ -1,0 +1,11 @@
+name: tests-taxonomy
+
+on:
+  pull_request
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd taxonomy && npm install && npm run test:ci
