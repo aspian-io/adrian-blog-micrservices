@@ -1,5 +1,5 @@
 import { TaxonomyTypeEnum } from '@aspianet/common';
-import mongoose, { model, Model, ObjectId, Schema } from 'mongoose';
+import mongoose, { model, Model, Schema } from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 interface TaxonomyAttrs {
