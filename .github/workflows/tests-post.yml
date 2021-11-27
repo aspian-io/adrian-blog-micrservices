@@ -1,8 +1,10 @@
 name: tests-post
 
 on:
-  pull_request
-  
+  pull_request:
+    paths:
+      - 'post/**'
+
 jobs:
   build:
     runs-on: ubuntu-latest

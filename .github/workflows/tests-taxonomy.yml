@@ -1,8 +1,10 @@
 name: tests-taxonomy
 
 on:
-  pull_request
-  
+  pull_request:
+    paths:
+      - 'taxonomy/**'
+
 jobs:
   build:
     runs-on: ubuntu-latest
