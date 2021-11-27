@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scheduler-redis-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scheduler-redis
+  template:
+    metadata:
+      labels:
+        app: scheduler-redis
+    spec:
+      containers:
+        - name: scheduler-redis
+          image: redis
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scheduler-redis-srv
+spec:
+  selector:
+    app: scheduler-redis
+  ports:
+    - name: db
+      protocol: TCP
+      port: 6379
+      targetPort: 6379

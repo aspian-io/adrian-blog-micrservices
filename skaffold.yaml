@@ -32,6 +32,22 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image: aspian/payment
+      context: payment
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: aspian/scheduler
+      context: scheduler
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
     - image: aspian/client
       context: client
       docker:

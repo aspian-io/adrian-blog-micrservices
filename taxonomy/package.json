@@ -18,7 +18,7 @@
   "author": "Omid Rouhani",
   "license": "ISC",
   "dependencies": {
-    "@aspianet/common": "^0.3.9",
+    "@aspianet/common": "^0.3.10",
     "@types/express": "^4.17.11",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
