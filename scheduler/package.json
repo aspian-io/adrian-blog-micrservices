@@ -1,6 +1,6 @@
 {
   "name": "scheduler",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,7 @@
   },
   "keywords": [],
   "author": "Omid Rouhani",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@aspianet/common": "^0.3.10",
     "@types/bull": "^3.15.6",

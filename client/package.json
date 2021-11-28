@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "author": "Omid Rouhani",
+  "license": "MIT",
   "dependencies": {
     "@types/react-redux": "^7.1.18",
     "axios": "^0.22.0",
