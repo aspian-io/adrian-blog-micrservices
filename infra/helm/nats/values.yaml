@@ -1,0 +1,15 @@
+nats:
+  image: nats:alpine
+
+  jetstream:
+    enabled: true
+
+    fileStorage:
+      enabled: true
+      storageDirectory: /nats-js-data/
+      existingClaim: nats-js-disk
+      claimStorageSize: 3Gi
+natsbox:
+  enabled: false
+  image: nats:alpine
+  pullPolicy: IfNotPresent

@@ -16,13 +16,9 @@ spec:
         - name: scheduler
           image: aspian/scheduler
           env:
-            - name: NATS_CLUSTER_ID
+            - name: NATS_CLUSTER_NAME
               value: adrian
-            - name: NATS_CLIENT_ID
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
-            - name: NATS_URL
-              value: 'http://nats-srv:4222'
+            - name: NATS_URLS
+              value: 'http://adrian-nats:4222'
             - name: REDIS_HOST
               value: scheduler-redis-srv

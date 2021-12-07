@@ -20,7 +20,7 @@ async function editController ( req: Request, res: Response, next: NextFunction 
     updatedByIp: req.ip
   } );
   await taxonomy.save();
-  await new TaxonomyUpdatedPublisher( natsWrapper.client ).publish( {
+  await new TaxonomyUpdatedPublisher( natsWrapper.natsConnection ).publish( {
     id: taxonomy.id,
     type: taxonomy.type,
     description: taxonomy.description,

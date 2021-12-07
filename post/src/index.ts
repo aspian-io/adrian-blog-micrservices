@@ -11,35 +11,32 @@ const start = async () => {
   if ( !process.env.MONGO_URI ) {
     throw new Error( 'MONGO_URI must be defined' );
   }
-  if ( !process.env.NATS_CLUSTER_ID ) {
-    throw new Error( 'NATS_CLUSTER_ID must be defined' );
+  if ( !process.env.NATS_CLUSTER_NAME ) {
+    throw new Error( 'NATS_CLUSTER_NAME must be defined' );
   }
-  if ( !process.env.NATS_CLIENT_ID ) {
-    throw new Error( 'NATS_CLIENT_ID must be defined' );
-  }
-  if ( !process.env.NATS_URL ) {
-    throw new Error( 'NATS_URL must be defined' );
+  if ( !process.env.NATS_URLS ) {
+    throw new Error( 'NATS_URLS must be defined' );
   }
 
   try {
     await natsWrapper.connect(
-      process.env.NATS_CLUSTER_ID,
-      process.env.NATS_CLIENT_ID,
-      process.env.NATS_URL
+      process.env.NATS_CLUSTER_NAME,
+      process.env.NATS_URLS
     );
-    natsWrapper.client.on( 'close', () => {
+    if ( natsWrapper.natsConnection.isClosed() ) {
       console.log( 'NATS connection closed!' );
       process.exit();
-    } );
-    process.on( 'SIGINT', () => natsWrapper.client.close() );
-    process.on( 'SIGTERM', () => natsWrapper.client.close() );
-
-    // Listeners init
-    new TaxonomyCreatedListener( natsWrapper.client ).listen();
-    new TaxonomyUpdatedListener( natsWrapper.client ).listen();
+    }
+    process.on( 'SIGINT', async () => await natsWrapper.natsConnection.drain() );
+    process.on( 'SIGTERM', async () => await natsWrapper.natsConnection.drain() );
 
     await mongoose.connect( process.env.MONGO_URI );
     console.log( 'Connected to MongoDb' );
+
+    // Listeners init
+    await new TaxonomyCreatedListener( natsWrapper.natsConnection ).listen();
+    await new TaxonomyUpdatedListener( natsWrapper.natsConnection ).listen();
+
   } catch ( err ) {
     console.error( err );
   }

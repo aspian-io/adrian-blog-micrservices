@@ -1,28 +1,23 @@
-import nats, { Stan } from 'node-nats-streaming';
+import { connect, NatsConnection } from 'nats';
 
 class NatsWrapper {
-  private _client?: Stan;
+  private _natsConnection?: NatsConnection;
 
-  get client () {
-    if ( !this._client ) {
-      throw new Error( "Cannot access NATS client before connecting" );
+  get natsConnection () {
+    if ( !this._natsConnection ) {
+      throw new Error( "Cannot access NATS connection" );
     }
 
-    return this._client;
+    return this._natsConnection;
   }
 
-  connect ( clusterId: string, clientId: string, url: string ): Promise<void> {
-    this._client = nats.connect( clusterId, clientId, { url } );
-
-    return new Promise( ( resolve, reject ) => {
-      this.client.on( 'connect', () => {
-        console.log( 'Connected to NATS' );
-        resolve();
-      } );
-      this.client.on( 'error', ( err ) => {
-        reject( err );
-      } );
-    } );
+  async connect ( clusterName: string, serverUrls: string | string[] | undefined ): Promise<void> {
+    try {
+      this._natsConnection = await connect( { servers: serverUrls, name: clusterName } );
+      console.log( `Connected to ${ this._natsConnection.getServer() }` );
+    } catch ( error ) {
+      console.error( `error connecting to NATS server: `, error );
+    }
   }
 }
 
