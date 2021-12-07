@@ -18,7 +18,7 @@
   "author": "Omid Rouhani",
   "license": "MIT",
   "dependencies": {
-    "@aspianet/common": "^0.5.10",
+    "@aspianet/common": "^0.5.11",
     "@types/bull": "^3.15.6",
     "bull": "^4.1.1",
     "nats": "^2.4.0",
