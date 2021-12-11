@@ -1,7 +1,6 @@
-import { Publisher, Subjects, TaxonomyCreatedEvent } from "@aspianet/common";
-import { streamName } from "../stream-name";
+import { Publisher, Streams, Subjects, TaxonomyCreatedEvent } from "@aspianet/common";
 
 export class TaxonomyCreatedPublisher extends Publisher<TaxonomyCreatedEvent> {
-  stream = streamName;
+  stream: Streams.Taxonomy = Streams.Taxonomy;
   subject: Subjects.TaxonomyCreated = Subjects.TaxonomyCreated;
 }

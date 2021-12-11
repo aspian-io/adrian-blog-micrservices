@@ -82,5 +82,7 @@ it( 'publishesh an event', async () => {
     .send( global.test_taxonomyData )
     .expect( 201 );
 
-  expect( natsWrapper.client.publish ).toHaveBeenCalled();
+  const js = natsWrapper.natsConnection.jetstream();
+
+  expect( natsWrapper.natsConnection.jetstream().publish ).toHaveBeenCalled();
 } );

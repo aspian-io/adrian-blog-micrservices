@@ -1,11 +1,12 @@
-import { Listener, Subjects, TaxonomyUpdatedEvent } from "@aspianet/common";
+import { Listener, Streams, Subjects, TaxonomyUpdatedEvent } from "@aspianet/common";
 import { JsMsg } from "nats";
 import { Taxonomy } from "../../models/taxonomy";
-import { streamName } from "../stream-name";
+import { queueGroupName } from "../queue-group-name";
 
 export class TaxonomyUpdatedListener extends Listener<TaxonomyUpdatedEvent> {
-  stream = streamName;
+  stream: Streams.Taxonomy = Streams.Taxonomy;
   subject: Subjects.TaxonomyUpdated = Subjects.TaxonomyUpdated;
+  queueGroupName: string = queueGroupName;
 
   async onMessage ( data: TaxonomyUpdatedEvent[ 'data' ], msg: JsMsg ) {
     const { id, type, description, term, slug } = data;

@@ -73,7 +73,7 @@ it( 'updates the taxonomy provided valid inputs', async () => {
   expect( taxonomyResponse.body.slug ).toEqual( "test-category-1-edited" );
 } );
 
-it( 'publishesh an event', async () => {
+it( 'publishes an event', async () => {
   const response = await request( app )
     .post( '/api/admin/taxonomies/create' )
     .set( 'authorization', global.test_signup( [ TaxonomyPolicies.TaxonomyClaims__CREATE, CorePolicies.CoreClaims__ADMIN ] ) )
@@ -91,5 +91,5 @@ it( 'publishesh an event', async () => {
     } )
     .expect( 200 );
 
-  expect( natsWrapper.client.publish ).toHaveBeenCalled();
+  expect( natsWrapper.natsConnection.jetstream().publish ).toHaveBeenCalled();
 } );

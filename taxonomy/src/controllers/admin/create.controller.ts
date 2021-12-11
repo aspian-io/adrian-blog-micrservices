@@ -8,6 +8,7 @@ async function createController ( req: Request, res: Response ) {
 
   const taxonomy = Taxonomy.build( { type, description, term, slug, createdBy: req.currentUser!.id, createdByIp: req.ip } );
   await taxonomy.save();
+  
   await new TaxonomyCreatedPublisher( natsWrapper.natsConnection ).publish( {
     id: taxonomy.id,
     type: taxonomy.type,
