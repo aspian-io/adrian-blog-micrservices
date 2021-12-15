@@ -1,5 +1,5 @@
 export const natsWrapper = {
-  natsConnection: {
+  client: {
     jetstreamManager: jest.fn( () => Promise.resolve( {
       streams: {
         info: jest.fn( ( stream: string ) => Promise.resolve( {} ) )

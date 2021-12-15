@@ -1,20 +1,20 @@
 import { connect, NatsConnection } from 'nats';
 
 class NatsWrapper {
-  private _natsConnection?: NatsConnection;
+  private _client?: NatsConnection;
 
-  get natsConnection () {
-    if ( !this._natsConnection ) {
-      throw new Error( "Cannot access NATS connection" );
+  get client () {
+    if ( !this._client ) {
+      throw new Error( "Cannot access NATS client" );
     }
 
-    return this._natsConnection;
+    return this._client;
   }
 
   async connect ( clusterName: string, serverUrls: string | string[] | undefined ): Promise<void> {
     try {
-      this._natsConnection = await connect( { servers: serverUrls, name: clusterName } );
-      console.log( `Connected to ${ this._natsConnection.getServer() }` );
+      this._client = await connect( { servers: serverUrls, name: clusterName } );
+      console.log( `Connected to ${ this._client.getServer() }` );
     } catch ( error ) {
       console.error( `error connecting to NATS server: `, error );
     }

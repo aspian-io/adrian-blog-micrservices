@@ -7,7 +7,10 @@ import { TaxonomyTypeEnum } from '@aspianet/common';
 
 declare global {
   var test_signup: ( policies: string[] ) => string;
-  var test_taxonomyData: { type: TaxonomyTypeEnum, description: string, term: string, slug: string };
+  var test_taxonomyData_cat_1: { type: TaxonomyTypeEnum, description: string, term: string, slug: string };
+  var test_taxonomyData_cat_2: { type: TaxonomyTypeEnum, description: string, term: string, slug: string };
+  var test_taxonomyData_nav: { type: TaxonomyTypeEnum, description: string, term: string, slug: string };
+  var test_taxonomyData_tag: { type: TaxonomyTypeEnum, description: string, term: string, slug: string };
 }
 
 jest.mock( '../nats-wrapper' );
@@ -48,9 +51,30 @@ global.test_signup = ( policies: string[] ) => {
   return token;
 };
 
-global.test_taxonomyData = {
+global.test_taxonomyData_cat_1 = {
   type: TaxonomyTypeEnum.CATEGORY,
   description: "",
   term: "test category 1",
   slug: "test-category-1",
+};
+
+global.test_taxonomyData_cat_2 = {
+  type: TaxonomyTypeEnum.CATEGORY,
+  description: "",
+  term: "test category 2",
+  slug: "test-category-2",
+};
+
+global.test_taxonomyData_nav = {
+  type: TaxonomyTypeEnum.NAV_MENU,
+  description: "",
+  term: "test nav 1",
+  slug: "test-nav-1",
+};
+
+global.test_taxonomyData_tag = {
+  type: TaxonomyTypeEnum.TAG,
+  description: "",
+  term: "test tag 1",
+  slug: "test-tag-1",
 };

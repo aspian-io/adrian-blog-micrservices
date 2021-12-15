@@ -10,7 +10,6 @@ export class TaxonomyCreatedListener extends Listener<TaxonomyCreatedEvent> {
 
   async onMessage ( data: TaxonomyCreatedEvent[ 'data' ], msg: JsMsg ) {
     const { id, type, description, term, slug } = data;
-    console.log( `Event Data #${ msg.seq } - `, data );
     const taxonomy = Taxonomy.build( { id, type, description, term, slug } );
     await taxonomy.save();
 

@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { app } from './app';
 import { TaxonomyCreatedListener } from './events/listeners/taxonomy-created-listener';
+import { TaxonomyDeletedListener } from './events/listeners/taxonomy-deleted-listener';
 import { TaxonomyUpdatedListener } from './events/listeners/taxonomy-updated-listener';
 import { natsWrapper } from './nats-wrapper';
 
@@ -23,19 +24,20 @@ const start = async () => {
       process.env.NATS_CLUSTER_NAME,
       process.env.NATS_URLS
     );
-    if ( natsWrapper.natsConnection.isClosed() ) {
+    if ( natsWrapper.client.isClosed() ) {
       console.log( 'NATS connection closed!' );
       process.exit();
     }
-    process.on( 'SIGINT', async () => await natsWrapper.natsConnection.drain() );
-    process.on( 'SIGTERM', async () => await natsWrapper.natsConnection.drain() );
+    process.on( 'SIGINT', async () => await natsWrapper.client.drain() );
+    process.on( 'SIGTERM', async () => await natsWrapper.client.drain() );
 
     await mongoose.connect( process.env.MONGO_URI );
     console.log( 'Connected to MongoDb' );
 
     // Listeners init
-    await new TaxonomyCreatedListener( natsWrapper.natsConnection ).listen();
-    await new TaxonomyUpdatedListener( natsWrapper.natsConnection ).listen();
+    await new TaxonomyCreatedListener( natsWrapper.client ).listen();
+    await new TaxonomyUpdatedListener( natsWrapper.client ).listen();
+    await new TaxonomyDeletedListener( natsWrapper.client ).listen();
 
   } catch ( err ) {
     console.error( err );

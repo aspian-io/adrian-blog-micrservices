@@ -1,4 +1,4 @@
-import mongoose, { PopulatedDoc } from 'mongoose';
+import mongoose from 'mongoose';
 import { UserDoc } from './user';
 
 interface RefreshTokenAttrs {

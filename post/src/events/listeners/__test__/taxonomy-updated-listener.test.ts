@@ -1,8 +1,9 @@
-import { TaxonomyCreatedEvent, TaxonomyTypeEnum } from "@aspianet/common";
+import { TaxonomyTypeEnum, TaxonomyUpdatedEvent } from "@aspianet/common";
 import { natsWrapper } from "../../../nats-wrapper";
 import { TaxonomyUpdatedListener } from "../taxonomy-updated-listener";
 import mongoose from 'mongoose';
 import { Taxonomy } from "../../../models/taxonomy";
+import { JsMsg } from "nats";
 
 const setup = async () => {
   // Create an instance of the listener
@@ -17,7 +18,7 @@ const setup = async () => {
   } );
   await taxonomy.save();
   // Create a fake data event
-  const data: TaxonomyCreatedEvent[ 'data' ] = {
+  const data: TaxonomyUpdatedEvent[ 'data' ] = {
     id: taxonomy.id,
     type: TaxonomyTypeEnum.CATEGORY,
     description: "",
@@ -27,7 +28,7 @@ const setup = async () => {
   };
   // Create a fake message object
   // @ts-ignore
-  const msg: Message = {
+  const msg: JsMsg = {
     ack: jest.fn()
   };
 

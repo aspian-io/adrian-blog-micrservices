@@ -64,25 +64,37 @@ it( 'creates a taxonomy with valid inputs', async () => {
   await request( app )
     .post( '/api/admin/taxonomies/create' )
     .set( 'authorization', global.test_signup( [ TaxonomyPolicies.TaxonomyClaims__CREATE, CorePolicies.CoreClaims__ADMIN ] ) )
-    .send( global.test_taxonomyData )
+    .send( global.test_taxonomyData_cat_1 )
     .expect( 201 );
 
   taxonomies = await Taxonomy.find( {} );
   expect( taxonomies.length ).toEqual( 1 );
-  expect( taxonomies[ 0 ].type ).toEqual( global.test_taxonomyData.type );
-  expect( taxonomies[ 0 ].description ).toEqual( global.test_taxonomyData.description );
-  expect( taxonomies[ 0 ].term ).toEqual( global.test_taxonomyData.term );
-  expect( taxonomies[ 0 ].slug ).toEqual( global.test_taxonomyData.slug );
+  expect( taxonomies[ 0 ].type ).toEqual( global.test_taxonomyData_cat_1.type );
+  expect( taxonomies[ 0 ].description ).toEqual( global.test_taxonomyData_cat_1.description );
+  expect( taxonomies[ 0 ].term ).toEqual( global.test_taxonomyData_cat_1.term );
+  expect( taxonomies[ 0 ].slug ).toEqual( global.test_taxonomyData_cat_1.slug );
 } );
 
-it( 'publishesh an event', async () => {
+it( 'does not allow to save a duplicated taxonomy', async () => {
   await request( app )
     .post( '/api/admin/taxonomies/create' )
     .set( 'authorization', global.test_signup( [ TaxonomyPolicies.TaxonomyClaims__CREATE, CorePolicies.CoreClaims__ADMIN ] ) )
-    .send( global.test_taxonomyData )
+    .send( global.test_taxonomyData_cat_1 )
     .expect( 201 );
 
-  const js = natsWrapper.natsConnection.jetstream();
+  await request( app )
+    .post( '/api/admin/taxonomies/create' )
+    .set( 'authorization', global.test_signup( [ TaxonomyPolicies.TaxonomyClaims__CREATE, CorePolicies.CoreClaims__ADMIN ] ) )
+    .send( global.test_taxonomyData_cat_1 )
+    .expect( 400 );
+} );
 
-  expect( natsWrapper.natsConnection.jetstream().publish ).toHaveBeenCalled();
+it( 'publishes an event', async () => {
+  await request( app )
+    .post( '/api/admin/taxonomies/create' )
+    .set( 'authorization', global.test_signup( [ TaxonomyPolicies.TaxonomyClaims__CREATE, CorePolicies.CoreClaims__ADMIN ] ) )
+    .send( global.test_taxonomyData_cat_1 )
+    .expect( 201 );
+
+  expect( natsWrapper.client.jetstream().publish ).toHaveBeenCalled();
 } );

@@ -21,12 +21,12 @@ const start = async () => {
       process.env.NATS_CLUSTER_NAME,
       process.env.NATS_URLS
     );
-    if ( natsWrapper.natsConnection.isClosed() ) {
+    if ( natsWrapper.client.isClosed() ) {
       console.log( 'NATS connection closed!' );
       process.exit();
     }
-    process.on( 'SIGINT', async () => await natsWrapper.natsConnection.drain() );
-    process.on( 'SIGTERM', async () => await natsWrapper.natsConnection.drain() );
+    process.on( 'SIGINT', async () => await natsWrapper.client.drain() );
+    process.on( 'SIGTERM', async () => await natsWrapper.client.drain() );
 
     await mongoose.connect( process.env.MONGO_URI );
     console.log( 'Connected to MongoDb' );

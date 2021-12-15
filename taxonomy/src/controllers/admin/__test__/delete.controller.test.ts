@@ -2,6 +2,7 @@ import request from 'supertest';
 import { app } from '../../../app';
 import mongoose from 'mongoose';
 import { CorePolicies, TaxonomyPolicies } from '@aspianet/common';
+import { natsWrapper } from '../../../nats-wrapper';
 
 it( 'returns 404 if the provided taxonomy id does not exist', async () => {
   await request( app )
@@ -38,7 +39,7 @@ it( 'deletes the taxonomy provided valid and existed taxonomy id', async () => {
   const response = await request( app )
     .post( '/api/admin/taxonomies/create' )
     .set( 'authorization', global.test_signup( [ TaxonomyPolicies.TaxonomyClaims__CREATE, CorePolicies.CoreClaims__ADMIN ] ) )
-    .send( global.test_taxonomyData )
+    .send( global.test_taxonomyData_cat_1 )
     .expect( 201 );
 
   await request( app )
@@ -52,4 +53,20 @@ it( 'deletes the taxonomy provided valid and existed taxonomy id', async () => {
     .set( 'authorization', global.test_signup( [ TaxonomyPolicies.TaxonomyClaims__DETAILS, CorePolicies.CoreClaims__ADMIN ] ) )
     .send()
     .expect( 404 );
+} );
+
+it( 'publishes an event', async () => {
+  const response = await request( app )
+    .post( '/api/admin/taxonomies/create' )
+    .set( 'authorization', global.test_signup( [ TaxonomyPolicies.TaxonomyClaims__CREATE, CorePolicies.CoreClaims__ADMIN ] ) )
+    .send( global.test_taxonomyData_cat_1 )
+    .expect( 201 );
+
+  await request( app )
+    .delete( `/api/admin/taxonomies/delete/${ response.body.id }` )
+    .set( 'authorization', global.test_signup( [ TaxonomyPolicies.TaxonomyClaims__DELETE, CorePolicies.CoreClaims__ADMIN ] ) )
+    .send( {} )
+    .expect( 200 );
+
+  expect( natsWrapper.client.jetstream().publish ).toHaveBeenCalled();
 } );

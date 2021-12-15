@@ -15,7 +15,7 @@ it( 'returns the taxonomy if the taxonomy is found', async () => {
   const response = await request( app )
     .post( '/api/admin/taxonomies/create' )
     .set( 'authorization', global.test_signup( [ TaxonomyPolicies.TaxonomyClaims__CREATE, CorePolicies.CoreClaims__ADMIN ] ) )
-    .send( global.test_taxonomyData )
+    .send( global.test_taxonomyData_cat_1 )
     .expect( 201 );
 
   const taxonomyResponse = await request( app )
@@ -24,6 +24,6 @@ it( 'returns the taxonomy if the taxonomy is found', async () => {
     .send()
     .expect( 200 );
 
-  expect( taxonomyResponse.body.term ).toEqual( global.test_taxonomyData.term );
-  expect( taxonomyResponse.body.slug ).toEqual( global.test_taxonomyData.slug );
+  expect( taxonomyResponse.body.term ).toEqual( global.test_taxonomyData_cat_1.term );
+  expect( taxonomyResponse.body.slug ).toEqual( global.test_taxonomyData_cat_1.slug );
 } );

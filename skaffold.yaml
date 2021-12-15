@@ -14,7 +14,7 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: 'src/***/*.ts'
             dest: .
     - image: aspian/taxonomy
       context: taxonomy
@@ -22,7 +22,7 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: 'src/***/*.ts'
             dest: .
     - image: aspian/post
       context: post
@@ -30,7 +30,7 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: 'src/***/*.ts'
             dest: .
     - image: aspian/payment
       context: payment
@@ -38,7 +38,7 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: 'src/***/*.ts'
             dest: .
     - image: aspian/scheduler
       context: scheduler
@@ -46,7 +46,7 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: 'src/***/*.ts'
             dest: .
     - image: aspian/client
       context: client
@@ -54,5 +54,5 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: '**/*.{tsx,ts,js}'
+          - src: '***/*.{tsx,ts,js}'
             dest: .

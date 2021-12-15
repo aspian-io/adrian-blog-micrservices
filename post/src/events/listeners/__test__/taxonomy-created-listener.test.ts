@@ -1,9 +1,9 @@
 import { TaxonomyCreatedEvent, TaxonomyTypeEnum } from "@aspianet/common";
 import { natsWrapper } from "../../../nats-wrapper";
 import { TaxonomyCreatedListener } from "../taxonomy-created-listener";
-import { Message } from 'node-nats-streaming';
 import mongoose from 'mongoose';
 import { Taxonomy } from "../../../models/taxonomy";
+import { JsMsg } from "nats";
 
 const setup = async () => {
   // Create an instance of the listener
@@ -19,7 +19,7 @@ const setup = async () => {
   };
   // Create a fake message object
   // @ts-ignore
-  const msg: Message = {
+  const msg: JsMsg = {
     ack: jest.fn()
   };
 

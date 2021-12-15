@@ -10,7 +10,6 @@ export class TaxonomyUpdatedListener extends Listener<TaxonomyUpdatedEvent> {
 
   async onMessage ( data: TaxonomyUpdatedEvent[ 'data' ], msg: JsMsg ) {
     const { id, type, description, term, slug } = data;
-    console.log( `Event Data #${ msg.seq } - `, data );
     const taxonomy = await Taxonomy.findByEvent( data );
 
     if ( !taxonomy ) {
